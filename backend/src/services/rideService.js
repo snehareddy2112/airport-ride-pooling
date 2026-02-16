@@ -5,12 +5,33 @@ const Cab = require("../models/Cab");
 const { findBestGroup, calculateRouteDistance } = require("../engines/matchingEngine");
 const { calculateFare } = require("../engines/pricingEngine");
 
+const MAX_SEATS = 4;
+const MAX_LUGGAGE = 4;
+
 const createRide = async (newRequestData) => {
   const session = await RideGroup.startSession();
   session.startTransaction();
 
   try {
 
+    // 🔴 BUSINESS VALIDATION
+    if (newRequestData.seats_required > MAX_SEATS) {
+      throw new Error("Seats requested exceed cab capacity");
+    }
+
+    if (newRequestData.luggage_count > MAX_LUGGAGE) {
+      throw new Error("Luggage exceeds cab capacity");
+    }
+
+    if (newRequestData.seats_required <= 0) {
+      throw new Error("Invalid seat count");
+    }
+
+    if (newRequestData.luggage_count < 0) {
+      throw new Error("Invalid luggage count");
+    }
+
+    // 1️⃣ Find candidate groups
     const candidateGroups = await RideGroup.find({
       status: "FORMING",
       direction: newRequestData.direction
@@ -59,8 +80,8 @@ const createRide = async (newRequestData) => {
       rideGroup = await RideGroup.findOneAndUpdate(
         {
           _id: bestGroup._id,
-          seats_used: { $lte: 4 - newRequestData.seats_required },
-          luggage_used: { $lte: 4 - newRequestData.luggage_count }
+          seats_used: { $lte: MAX_SEATS - newRequestData.seats_required },
+          luggage_used: { $lte: MAX_LUGGAGE - newRequestData.luggage_count }
         },
         {
           $inc: {
@@ -75,7 +96,7 @@ const createRide = async (newRequestData) => {
       );
 
       if (!rideGroup) {
-        throw new Error("Seat conflict occurred");
+        throw new Error("Seat or luggage capacity exceeded");
       }
 
     } else {
@@ -111,7 +132,7 @@ const createRide = async (newRequestData) => {
     const rideRequest = await RideRequest.create([{
       ...newRequestData,
       ride_group_id: rideGroup._id,
-      fare: fare,
+      fare,
       status: "CONFIRMED"
     }], { session });
 

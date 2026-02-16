@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Airport Ride Pooling</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>🚗 Airport Ride Pooling System</h1>
+
+  <div class="container">
+
+    <div class="card">
+      <h2>Book Ride</h2>
+
+      <input id="drop_lat" placeholder="Drop Latitude" />
+      <input id="drop_lng" placeholder="Drop Longitude" />
+      <input id="seats" type="number" placeholder="Seats Required" />
+      <input id="luggage" type="number" placeholder="Luggage Count" />
+      <input id="detour" type="number" placeholder="Detour Tolerance (km)" />
+
+      <select id="direction">
+        <option value="FROM_AIRPORT">From Airport</option>
+        <option value="TO_AIRPORT">To Airport</option>
+      </select>
+
+      <button onclick="bookRide()">Book Ride</button>
+
+      <div id="bookingResult" class="result"></div>
+    </div>
+
+    <div class="card">
+      <h2>Cancel Ride</h2>
+
+      <input id="cancelId" placeholder="Ride Request ID" />
+      <button onclick="cancelRide()">Cancel Ride</button>
+
+      <div id="cancelResult" class="result"></div>
+    </div>
+
+    <div class="card">
+      <h2>Active Groups</h2>
+      <button onclick="loadGroups()">Refresh Groups</button>
+      <ul id="groupsList"></ul>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
