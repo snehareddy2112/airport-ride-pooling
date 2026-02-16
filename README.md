@@ -332,6 +332,68 @@ Each passenger pays an individual share of total route cost.
 
 ---
 
+## 🏗 High Level Architecture
+
+The system follows a layered architecture:
+
+* **Client Layer** – Browser UI or Postman sends API requests.
+* **API Layer (Express.js)** – Handles routing and request parsing.
+* **Controller Layer** – Validates input and forwards requests.
+* **Service Layer** – Contains core business logic and transaction handling.
+* **Matching Engine** – Responsible for grouping passengers.
+* **Pricing Engine** – Calculates dynamic fare.
+* **Database Layer (MongoDB)** – Stores ride groups and ride requests with proper indexing.
+
+### Scalability Design
+
+* Stateless APIs allow horizontal scaling.
+* MongoDB Atlas supports clustering and sharding.
+* Indexed queries ensure low-latency data access.
+
+---
+
+## 🧩 Low Level Design
+
+### Core Components
+
+**RideRequest**
+
+* Stores passenger booking details.
+* Linked to a RideGroup.
+
+**RideGroup**
+
+* Represents a shared ride.
+* Tracks seat and luggage utilization.
+
+**Cab**
+
+* Defines vehicle capacity constraints.
+
+**RideService**
+
+* Handles ride creation and cancellation.
+* Manages database transactions.
+
+**MatchingEngine**
+
+* Implements grouping logic.
+
+**PricingEngine**
+
+* Calculates per-passenger fare.
+
+---
+
+## 🔧 Design Principles Used
+
+* **Separation of Concerns** – Controllers, services, and engines are separated.
+* **Transaction Safety** – MongoDB transactions prevent race conditions.
+* **Stateless API Design** – Enables horizontal scaling.
+* **Modular Architecture** – Matching and pricing are independently extensible.
+
+---
+
 # 📊 Scalability Justification
 
 ## ✅ 10,000 Concurrent Users
@@ -388,4 +450,4 @@ Each passenger pays an individual share of total route cost.
 
 ## 👩‍💻 Author
 
-**Sneha Aelijerla**
+**Sneha**
