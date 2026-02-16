@@ -67,6 +67,9 @@ async function cancelRide() {
     resultDiv.innerHTML = `❌ ${err.message}`;
   }
 }
+function closeModal() {
+  document.getElementById("demoModal").style.display = "none";
+}
 
 async function loadGroups() {
   const list = document.getElementById("groupsList");
@@ -92,5 +95,7 @@ async function loadGroups() {
 
   } catch (err) {
     list.innerHTML = "<li>Error loading groups</li>";
+
   }
+
 }
