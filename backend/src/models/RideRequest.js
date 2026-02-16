@@ -29,6 +29,6 @@ const rideRequestSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-rideRequestSchema.index({ ride_group_id: 1 });
+rideRequestSchema.index({ ride_group_id: 1, status: 1 });
 
 module.exports = mongoose.model("RideRequest", rideRequestSchema);
