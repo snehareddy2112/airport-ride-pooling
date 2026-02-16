@@ -5,6 +5,19 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Demo Disclaimer Modal -->
+<div id="demoModal" class="modal">
+  <div class="modal-content">
+    <p>
+      🚗 <strong>Demo Notice</strong><br><br>
+      This UI is built for demonstration purposes only.  
+      The primary focus of this project is to showcase a scalable,
+      maintainable, and modular Smart Airport Ride Pooling <b>Backend</b> system.
+    </p>
+    <button onclick="closeModal()">OK</button>
+  </div>
+</div>
+
 
   <h1>🚗 Airport Ride Pooling System</h1>
 
@@ -13,8 +26,8 @@
     <div class="card">
       <h2>Book Ride</h2>
 
-      <input id="drop_lat" placeholder="Drop Latitude" />
-      <input id="drop_lng" placeholder="Drop Longitude" />
+      <input id="drop_lat" placeholder="17.2304" />
+      <input id="drop_lng" placeholder="78.8990" />
       <input id="seats" type="number" placeholder="Seats Required" />
       <input id="luggage" type="number" placeholder="Luggage Count" />
       <input id="detour" type="number" placeholder="Detour Tolerance (km)" />
